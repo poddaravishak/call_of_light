@@ -2,13 +2,13 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="border-t border-border mt-24">
-      <div className="mx-auto max-w-content px-6 py-16 flex flex-col md:flex-row md:items-start md:justify-between gap-12">
+    <footer className="border-t border-border mt-24 bg-white/40 backdrop-blur-[2px]">
+      <div className="mx-auto max-w-content px-6 py-20 flex flex-col md:flex-row md:items-start md:justify-between gap-12">
         <div>
-          <p className="font-display uppercase tracking-[0.18em] text-lg text-heading">
+          <p className="font-display uppercase tracking-[0.22em] text-lg text-heading">
             The Call of Light
           </p>
-          <p className="mt-4 text-muted max-w-xs">
+          <p className="mt-4 text-muted max-w-xs font-serif italic">
             Stories that breathe in silence.
           </p>
         </div>

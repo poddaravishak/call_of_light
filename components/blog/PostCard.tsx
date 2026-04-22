@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { CoverImage } from "@/components/shared/CoverImage";
-import { TagBadge } from "@/components/blog/TagBadge";
 import { formatDate } from "@/lib/utils";
 import type { Post } from "@/lib/types";
 
@@ -8,18 +7,22 @@ export function PostCard({ post }: { post: Post }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group block border border-border hover:border-muted transition-colors duration-400"
+      className="group block bg-white/60 backdrop-blur-[2px] border border-border hover:shadow-[0_30px_60px_-30px_rgba(10,10,10,0.28)] hover:-translate-y-0.5 transition-all duration-500 ease-out"
     >
       <div className="aspect-[3/2] overflow-hidden">
         <CoverImage
           src={post.cover_image}
           alt={post.title}
-          className="group-hover:scale-[1.02] transition-transform duration-[600ms]"
+          className="group-hover:scale-[1.03] transition-transform duration-[800ms] ease-out"
         />
       </div>
-      <div className="p-6">
-        {post.tags?.[0] && <TagBadge label={post.tags[0]} />}
-        <h3 className="mt-4 font-display text-2xl text-heading leading-snug">
+      <div className="p-7">
+        {post.tags?.[0] && (
+          <span className="font-mono-ui inline-block border border-border px-2 py-1 text-muted">
+            {post.tags[0]}
+          </span>
+        )}
+        <h3 className="mt-5 font-display text-2xl text-heading leading-snug">
           {post.title}
         </h3>
         {post.excerpt && (

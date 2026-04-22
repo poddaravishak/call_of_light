@@ -21,7 +21,8 @@ export function HeroSection({ title, tagline, description, bgImage }: Props) {
         className="absolute inset-0 bg-cover bg-center cover-img"
         style={{ backgroundImage: `url(${bgImage})` }}
       />
-      <div className="absolute inset-0 bg-bg/60" />
+      <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-white/65 to-white/90" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_rgba(250,250,247,0.35)_70%,_rgba(250,250,247,0.6)_100%)]" />
       <GrainOverlay />
 
       <div className="relative z-10 h-full flex items-center">
@@ -31,8 +32,9 @@ export function HeroSection({ title, tagline, description, bgImage }: Props) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="font-mono-ui text-accent mb-10"
+              className="font-mono-ui text-ink/80 mb-10 flex items-center"
             >
+              <span className="hairline" />
               {tagline}
             </motion.p>
 
@@ -67,9 +69,13 @@ export function HeroSection({ title, tagline, description, bgImage }: Props) {
             >
               <Link
                 href="/blog"
-                className="font-mono-ui inline-flex items-center gap-3 border border-white px-6 py-3 text-heading hover:bg-white hover:text-black transition-colors duration-400"
+                className="group/btn font-mono-ui inline-flex items-center gap-3 border border-heading px-7 py-4 text-heading hover:bg-heading hover:text-white transition-all duration-500 hover:gap-5"
               >
-                Read the Stories <ArrowRight size={14} />
+                Read the Stories
+                <ArrowRight
+                  size={14}
+                  className="transition-transform duration-500 group-hover/btn:translate-x-1"
+                />
               </Link>
             </motion.div>
           </div>

@@ -25,9 +25,9 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-40 transition-all duration-400",
+        "fixed top-0 left-0 right-0 z-40 transition-all duration-500",
         scrolled
-          ? "bg-bg/90 backdrop-blur border-b border-border"
+          ? "bg-white/80 backdrop-blur-md border-b border-border shadow-[0_1px_40px_-20px_rgba(10,10,10,0.25)]"
           : "bg-transparent"
       )}
     >
@@ -51,7 +51,7 @@ export function Navbar() {
           ))}
           <Link
             href="/subscribe"
-            className="font-mono-ui border border-white px-4 py-2 text-heading hover:bg-white hover:text-black transition-colors duration-400"
+            className="font-mono-ui border border-heading px-4 py-2 text-heading hover:bg-heading hover:text-white transition-colors duration-400"
           >
             Subscribe →
           </Link>
@@ -68,7 +68,7 @@ export function Navbar() {
       </nav>
 
       {open && (
-        <div className="md:hidden fixed inset-0 top-20 z-40 bg-bg flex flex-col items-center justify-center gap-10 border-t border-border">
+        <div className="md:hidden fixed inset-0 top-20 z-40 bg-white flex flex-col items-center justify-center gap-10 border-t border-border">
           {LINKS.map((link) => (
             <Link
               key={link.href}
@@ -82,7 +82,7 @@ export function Navbar() {
           <Link
             href="/subscribe"
             onClick={() => setOpen(false)}
-            className="font-mono-ui border border-white px-6 py-3 mt-6"
+            className="font-mono-ui border border-heading px-6 py-3 mt-6"
           >
             Subscribe →
           </Link>

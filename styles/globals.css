@@ -3,15 +3,18 @@
 @tailwind utilities;
 
 :root {
-  --bg: #0a0a0a;
-  --surface: #111111;
-  --border: #222222;
-  --muted: #555555;
-  --text: #e8e4dc;
-  --heading: #f5f2ec;
-  --accent: #c8b89a;
-  --accent-dim: #8a7a66;
+  --bg: #fafaf7;
+  --surface: #f2f0ea;
+  --border: #d9d5cb;
+  --rule: #1a1a1a;
+  --muted: #6b6b66;
+  --text: #1a1a1a;
+  --heading: #0a0a0a;
+  --accent: #1a1a1a;
+  --accent-dim: #4a4a4a;
   --white: #ffffff;
+  --ink: #0a0a0a;
+  --site-bg-image: url("https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=2400&q=80");
 }
 
 * {
@@ -27,8 +30,44 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body {
+  position: relative;
+  min-height: 100vh;
+  isolation: isolate;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: var(--site-bg-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  filter: grayscale(70%) contrast(0.98) sepia(10%);
+  opacity: 0.14;
+  z-index: -2;
+  pointer-events: none;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(
+      ellipse at 50% 0%,
+      rgba(250, 250, 247, 0.3) 0%,
+      rgba(250, 250, 247, 0.65) 60%,
+      rgba(250, 250, 247, 0.8) 100%
+    );
+  z-index: -1;
+  pointer-events: none;
+}
+
 ::selection {
-  background: var(--accent);
+  background: var(--ink);
   color: var(--bg);
 }
 
@@ -62,21 +101,32 @@ a {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.04;
-  mix-blend-mode: overlay;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
   background-image: url("/grain.png");
   background-size: 200px 200px;
   z-index: 1;
 }
 
-/* Cover image treatment */
+/* Cover image treatment — warm duotone for the white/matte-black theme */
 .cover-img {
-  filter: grayscale(30%) contrast(1.1);
-  transition: filter 600ms ease, transform 600ms ease;
+  filter: grayscale(35%) contrast(1.02) sepia(8%);
+  transition: filter 700ms ease, transform 700ms ease;
 }
 
 .cover-img:hover {
-  filter: grayscale(10%) contrast(1.05);
+  filter: grayscale(10%) contrast(1.03) sepia(4%);
+}
+
+/* Hairline decorative rule — for kickers, dividers, etc. */
+.hairline {
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  background: var(--rule);
+  vertical-align: middle;
+  margin-right: 12px;
+  opacity: 0.7;
 }
 
 /* Prose — for rendered rich-text post bodies */
@@ -130,7 +180,7 @@ a {
 
 .prose-light img {
   width: 100%;
-  filter: grayscale(30%) contrast(1.1);
+  filter: grayscale(20%) contrast(1.02);
   margin: 2em 0;
 }
 

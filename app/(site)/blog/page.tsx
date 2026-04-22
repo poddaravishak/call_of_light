@@ -35,7 +35,7 @@ export default function BlogPage({
               href={tag === "All" ? "/blog" : `/blog?tag=${tag}`}
               className={`font-mono-ui border px-3 py-1.5 transition-colors duration-400 ${
                 isActive
-                  ? "bg-white text-black border-white"
+                  ? "bg-heading text-white border-heading"
                   : "border-border text-muted hover:text-heading hover:border-muted"
               }`}
             >
