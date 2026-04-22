@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0a0a0a;
+  --surface: #111111;
+  --border: #222222;
+  --muted: #555555;
+  --text: #e8e4dc;
+  --heading: #f5f2ec;
+  --accent: #c8b89a;
+  --accent-dim: #8a7a66;
+  --white: #ffffff;
+}
+
+* {
+  border-color: var(--border);
+}
+
+html,
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-lora), Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-cormorant), Georgia, serif;
+  color: var(--heading);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.font-mono-ui {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 400ms ease;
+}
+
+/* Grain overlay — applied via <GrainOverlay /> */
+.grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("/grain.png");
+  background-size: 200px 200px;
+  z-index: 1;
+}
+
+/* Cover image treatment */
+.cover-img {
+  filter: grayscale(30%) contrast(1.1);
+  transition: filter 600ms ease, transform 600ms ease;
+}
+
+.cover-img:hover {
+  filter: grayscale(10%) contrast(1.05);
+}
+
+/* Prose — for rendered rich-text post bodies */
+.prose-light {
+  color: var(--text);
+  max-width: 680px;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.prose-light h1,
+.prose-light h2,
+.prose-light h3 {
+  margin-top: 2.5em;
+  margin-bottom: 0.8em;
+}
+
+.prose-light h1 {
+  font-size: 42px;
+}
+
+.prose-light h2 {
+  font-size: 32px;
+}
+
+.prose-light h3 {
+  font-size: 24px;
+}
+
+.prose-light p {
+  margin-bottom: 1.4em;
+}
+
+.prose-light blockquote {
+  border-left: 2px solid var(--accent);
+  padding-left: 1.5em;
+  margin: 2em 0;
+  font-style: italic;
+  color: var(--heading);
+}
+
+.prose-light a {
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent-dim);
+}
+
+.prose-light a:hover {
+  color: var(--heading);
+  border-bottom-color: var(--heading);
+}
+
+.prose-light img {
+  width: 100%;
+  filter: grayscale(30%) contrast(1.1);
+  margin: 2em 0;
+}
+
+.prose-light code {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  background: var(--surface);
+  padding: 0.15em 0.4em;
+  font-size: 0.9em;
+  border: 1px solid var(--border);
+}
+
+.prose-light pre {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 1em;
+  overflow-x: auto;
+  margin: 2em 0;
+}
+
+.prose-light pre code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.prose-light hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 3em 0;
+}
