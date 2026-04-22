@@ -11,7 +11,7 @@ const byDate = (a: Post, b: Post) =>
 export async function getSiteConfig(): Promise<SiteConfig> {
   if (isDemoMode()) return demoSiteConfig;
   const { data } = await getSupabase().from("site_config").select("*").single();
-  return (data as SiteConfig) ?? demoSiteConfig;
+  return (data as unknown as SiteConfig) ?? demoSiteConfig;
 }
 
 export async function getFeaturedPost(): Promise<Post | null> {
@@ -25,7 +25,7 @@ export async function getFeaturedPost(): Promise<Post | null> {
     .order("published_at", { ascending: false })
     .limit(1)
     .maybeSingle();
-  return (data as Post) ?? null;
+  return (data as unknown as Post) ?? null;
 }
 
 export async function getPosts(params: {
@@ -61,7 +61,7 @@ export async function getPosts(params: {
   if (authorId) query = query.eq("author_id", authorId);
 
   const { data } = await query;
-  return (data as Post[]) ?? [];
+  return (data as unknown as Post[]) ?? [];
 }
 
 export async function getPostBySlug(slug: string): Promise<Post | null> {
@@ -72,7 +72,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
     .eq("slug", slug)
     .eq("status", "published")
     .single();
-  return (data as Post) ?? null;
+  return (data as unknown as Post) ?? null;
 }
 
 export async function getAuthors(): Promise<Author[]> {
@@ -82,7 +82,7 @@ export async function getAuthors(): Promise<Author[]> {
     .from("authors")
     .select("*")
     .order("name");
-  return (data as Author[]) ?? [];
+  return (data as unknown as Author[]) ?? [];
 }
 
 export async function getAuthorBySlug(slug: string): Promise<Author | null> {
@@ -92,7 +92,7 @@ export async function getAuthorBySlug(slug: string): Promise<Author | null> {
     .select("*")
     .eq("slug", slug)
     .single();
-  return (data as Author) ?? null;
+  return (data as unknown as Author) ?? null;
 }
 
 export async function getPostCountByAuthor(
