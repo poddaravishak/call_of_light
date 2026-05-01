@@ -10,34 +10,38 @@ const byDate = (a: Post, b: Post) =>
   new Date(b.published_at ?? 0).getTime() -
   new Date(a.published_at ?? 0).getTime();
 
+function s(v: unknown, fallback = ''): string { return (v as string) ?? fallback }
+function sn(v: unknown): string | null { return v ? (v as string) : null }
+function bn(v: unknown): boolean { return Boolean(v) }
+
 function mapPost(doc: Doc, authorDoc?: Doc): Post {
   return {
     id: doc.$id,
-    slug: doc.slug ?? '',
-    title: doc.title ?? '',
-    excerpt: doc.excerpt || null,
-    cover_image: doc.coverImage || null,
-    body: doc.content || null,
-    body_html: doc.content || null,
-    tags: doc.tagNames ? doc.tagNames.split(',').map((t: string) => t.trim()).filter(Boolean) : [],
-    featured: doc.featured ?? false,
-    language: doc.language || null,
-    status: doc.status ?? 'published',
-    published_at: doc.publishedAt || doc.$createdAt,
-    read_time: doc.readTime ?? null,
-    seo_description: doc.seoDescription || null,
-    author_id: doc.authorId ?? '',
+    slug: s(doc.slug),
+    title: s(doc.title),
+    excerpt: sn(doc.excerpt),
+    cover_image: sn(doc.coverImage),
+    body: sn(doc.content),
+    body_html: sn(doc.content),
+    tags: doc.tagNames ? s(doc.tagNames).split(',').map(t => t.trim()).filter(Boolean) : [],
+    featured: bn(doc.featured),
+    language: sn(doc.language),
+    status: (s(doc.status) || 'published') as Post['status'],
+    published_at: s(doc.publishedAt) || doc.$createdAt,
+    read_time: doc.readTime ? Number(doc.readTime) : null,
+    seo_description: sn(doc.seoDescription),
+    author_id: s(doc.authorId),
     authors: doc.authorName
       ? {
-          id: authorDoc?.$id ?? doc.authorId ?? '',
-          slug: authorDoc?.slug || authorDoc?.$id || '',
-          name: authorDoc?.name ?? doc.authorName,
-          bio: authorDoc?.bio ?? null,
-          avatar: authorDoc?.photo ?? null,
-          tagline: authorDoc?.tagline ?? null,
-          twitter: authorDoc?.twitter ?? null,
-          instagram: authorDoc?.instagram ?? null,
-          website: authorDoc?.website ?? null,
+          id: authorDoc?.$id ?? s(doc.authorId),
+          slug: (authorDoc?.slug as string) || authorDoc?.$id || '',
+          name: (authorDoc?.name as string) ?? s(doc.authorName),
+          bio: sn(authorDoc?.bio),
+          avatar: sn(authorDoc?.photo),
+          tagline: sn(authorDoc?.tagline),
+          twitter: sn(authorDoc?.twitter),
+          instagram: sn(authorDoc?.instagram),
+          website: sn(authorDoc?.website),
         }
       : null,
   };
@@ -63,12 +67,12 @@ export async function getSiteConfig(): Promise<SiteConfig> {
     const doc = await db.getDocument(DB_ID, COL.SITE_SETTINGS, SITE_SETTINGS_DOC_ID) as Doc;
     return {
       id: doc.$id,
-      hero_title: doc.title ?? '',
-      hero_tagline: doc.motto ?? '',
-      hero_description: doc.subtitle ?? '',
-      hero_bg_image: doc.bgImage ?? null,
-      site_name: doc.title ?? '',
-      site_tagline: doc.motto ?? '',
+      hero_title: s(doc.title),
+      hero_tagline: s(doc.motto),
+      hero_description: s(doc.subtitle),
+      hero_bg_image: sn(doc.bgImage),
+      site_name: s(doc.title),
+      site_tagline: s(doc.motto),
     };
   } catch {
     return demoSiteConfig;
