@@ -3,11 +3,14 @@ import type { Author, Post, SiteConfig } from "@/lib/types";
 import { createClient, DB_ID, COL, SITE_SETTINGS_DOC_ID, Query } from "@/lib/appwrite";
 import type { Models } from "node-appwrite";
 
+// Appwrite Documents have typed system fields but custom attributes are untyped
+type Doc = Models.Document & Record<string, unknown>;
+
 const byDate = (a: Post, b: Post) =>
   new Date(b.published_at ?? 0).getTime() -
   new Date(a.published_at ?? 0).getTime();
 
-function mapPost(doc: Models.Document, authorDoc?: Models.Document): Post {
+function mapPost(doc: Doc, authorDoc?: Doc): Post {
   return {
     id: doc.$id,
     slug: doc.slug ?? '',
@@ -40,7 +43,7 @@ function mapPost(doc: Models.Document, authorDoc?: Models.Document): Post {
   };
 }
 
-async function fetchAuthorsByUserId(authorIds: string[]): Promise<Map<string, Models.Document>> {
+async function fetchAuthorsByUserId(authorIds: string[]): Promise<Map<string, Doc>> {
   if (authorIds.length === 0) return new Map();
   try {
     const db = createClient();
@@ -48,7 +51,7 @@ async function fetchAuthorsByUserId(authorIds: string[]): Promise<Map<string, Mo
       Query.equal('userId', authorIds),
       Query.limit(authorIds.length + 1),
     ]);
-    return new Map(res.documents.map(doc => [doc.userId as string, doc]));
+    return new Map((res.documents as Doc[]).map(doc => [doc.userId as string, doc]));
   } catch {
     return new Map();
   }
@@ -57,7 +60,7 @@ async function fetchAuthorsByUserId(authorIds: string[]): Promise<Map<string, Mo
 export async function getSiteConfig(): Promise<SiteConfig> {
   try {
     const db = createClient();
-    const doc = await db.getDocument(DB_ID, COL.SITE_SETTINGS, SITE_SETTINGS_DOC_ID);
+    const doc = await db.getDocument(DB_ID, COL.SITE_SETTINGS, SITE_SETTINGS_DOC_ID) as Doc;
     return {
       id: doc.$id,
       hero_title: doc.title ?? '',
@@ -80,10 +83,10 @@ export async function getFeaturedPost(): Promise<Post | null> {
       Query.orderDesc('$createdAt'),
       Query.limit(1),
     ]);
-    const doc = res.documents[0];
+    const doc = res.documents[0] as Doc | undefined;
     if (!doc) return null;
-    const authorMap = await fetchAuthorsByUserId([doc.authorId].filter(Boolean));
-    return mapPost(doc, authorMap.get(doc.authorId));
+    const authorMap = await fetchAuthorsByUserId(([doc.authorId] as string[]).filter(Boolean));
+    return mapPost(doc, authorMap.get(doc.authorId as string));
   } catch {
     return [...demoPosts].sort(byDate)[0] ?? null;
   }
@@ -97,9 +100,10 @@ export async function getFeaturedPosts(): Promise<Post[]> {
       Query.orderDesc('$createdAt'),
       Query.limit(20),
     ]);
-    const authorIds = [...new Set(res.documents.map(d => d.authorId).filter(Boolean))];
+    const docs = res.documents as Doc[];
+    const authorIds = [...new Set(docs.map(d => d.authorId as string).filter(Boolean))];
     const authorMap = await fetchAuthorsByUserId(authorIds);
-    const posts = res.documents.map(d => mapPost(d, authorMap.get(d.authorId)));
+    const posts = docs.map(d => mapPost(d, authorMap.get(d.authorId as string)));
     const featuredOnly = posts.filter(p => p.featured);
     return (featuredOnly.length > 0 ? featuredOnly : posts).slice(0, 4);
   } catch {
@@ -115,9 +119,10 @@ export async function getHomePagePosts(): Promise<Post[]> {
       Query.orderDesc('$createdAt'),
       Query.limit(12),
     ]);
-    const authorIds = [...new Set(res.documents.map(d => d.authorId).filter(Boolean))];
+    const docs = res.documents as Doc[];
+    const authorIds = [...new Set(docs.map(d => d.authorId as string).filter(Boolean))];
     const authorMap = await fetchAuthorsByUserId(authorIds);
-    const posts = res.documents.map(d => mapPost(d, authorMap.get(d.authorId)));
+    const posts = docs.map(d => mapPost(d, authorMap.get(d.authorId as string)));
     const featured = posts.filter(p => p.featured);
     const rest = posts.filter(p => !p.featured);
     return [...featured, ...rest].slice(0, 8);
@@ -151,9 +156,10 @@ export async function getPosts(params: {
     if (authorId) queries.push(Query.equal('authorId', authorId));
 
     const res = await db.listDocuments(DB_ID, COL.POSTS, queries);
-    const authorIds = [...new Set(res.documents.map(d => d.authorId).filter(Boolean))];
+    const docs = res.documents as Doc[];
+    const authorIds = [...new Set(docs.map(d => d.authorId as string).filter(Boolean))];
     const authorMap = await fetchAuthorsByUserId(authorIds);
-    let posts = res.documents.map(d => mapPost(d, authorMap.get(d.authorId)));
+    let posts = docs.map(d => mapPost(d, authorMap.get(d.authorId as string)));
 
     if (tag && tag !== 'All') {
       posts = posts.filter(p => p.tags.some(t => t.toLowerCase() === tag.toLowerCase()));
@@ -178,10 +184,10 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
       Query.equal('status', 'published'),
       Query.limit(1),
     ]);
-    const doc = res.documents[0];
+    const doc = res.documents[0] as Doc | undefined;
     if (!doc) return null;
-    const authorMap = await fetchAuthorsByUserId([doc.authorId].filter(Boolean));
-    return mapPost(doc, authorMap.get(doc.authorId));
+    const authorMap = await fetchAuthorsByUserId(([doc.authorId] as string[]).filter(Boolean));
+    return mapPost(doc, authorMap.get(doc.authorId as string));
   } catch {
     return demoPosts.find(p => p.slug === slug) ?? null;
   }
@@ -194,16 +200,16 @@ export async function getAuthors(): Promise<Author[]> {
       Query.orderAsc('name'),
       Query.limit(100),
     ]);
-    return res.documents.map((doc) => ({
+    return (res.documents as Doc[]).map((doc) => ({
       id: doc.$id,
       slug: (doc.slug as string) || doc.$id,
-      name: doc.name ?? '',
-      bio: doc.bio ?? null,
-      avatar: doc.photo ?? null,
-      tagline: doc.tagline ?? null,
-      twitter: doc.twitter ?? null,
-      instagram: doc.instagram ?? null,
-      website: doc.website ?? null,
+      name: (doc.name as string) ?? '',
+      bio: (doc.bio as string) ?? null,
+      avatar: (doc.photo as string) ?? null,
+      tagline: (doc.tagline as string) ?? null,
+      twitter: (doc.twitter as string) ?? null,
+      instagram: (doc.instagram as string) ?? null,
+      website: (doc.website as string) ?? null,
     }));
   } catch {
     return [...demoAuthors].sort((a, b) => a.name.localeCompare(b.name));
@@ -214,19 +220,19 @@ export async function getAuthorBySlug(slug: string): Promise<Author | null> {
   try {
     const db = createClient();
     // try slug attribute first, fall back to $id lookup
-    let doc: Models.Document | undefined;
+    let doc: Doc | undefined;
     try {
       const res = await db.listDocuments(DB_ID, COL.AUTHORS, [
         Query.equal('slug', slug),
         Query.limit(1),
       ]);
-      doc = res.documents[0];
+      doc = res.documents[0] as Doc | undefined;
     } catch { /* slug attribute not indexed or missing */ }
 
     if (!doc) {
       // fallback: treat slug param as $id
       try {
-        doc = await db.getDocument(DB_ID, COL.AUTHORS, slug);
+        doc = await db.getDocument(DB_ID, COL.AUTHORS, slug) as Doc;
       } catch { /* not found */ }
     }
 
@@ -234,13 +240,13 @@ export async function getAuthorBySlug(slug: string): Promise<Author | null> {
     return {
       id: doc.$id,
       slug: (doc.slug as string) || doc.$id,
-      name: doc.name ?? '',
-      bio: doc.bio ?? null,
-      avatar: doc.photo ?? null,
-      tagline: doc.tagline ?? null,
-      twitter: doc.twitter ?? null,
-      instagram: doc.instagram ?? null,
-      website: doc.website ?? null,
+      name: (doc.name as string) ?? '',
+      bio: (doc.bio as string) ?? null,
+      avatar: (doc.photo as string) ?? null,
+      tagline: (doc.tagline as string) ?? null,
+      twitter: (doc.twitter as string) ?? null,
+      instagram: (doc.instagram as string) ?? null,
+      website: (doc.website as string) ?? null,
     };
   } catch {
     return demoAuthors.find(a => a.slug === slug) ?? null;
