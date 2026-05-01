@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getSupabase, isSupabaseConfigured } from "@/lib/supabase";
+import { createClient, DB_ID, COL, ID } from "@/lib/appwrite";
 
 const schema = z.object({
-  name: z.string().min(1).max(120).optional(),
+  name: z.string().max(120).optional(),
   email: z.string().email(),
 });
 
@@ -18,26 +18,18 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!isSupabaseConfigured) {
-      // Demo mode — accept the submission but don't persist.
-      return NextResponse.json({ ok: true, demo: true });
-    }
-
-    const { error } = await getSupabase()
-      .from("newsletter_subscribers")
-      .insert([parsed.data]);
-
-    if (error) {
-      return NextResponse.json(
-        { ok: false, error: error.message },
-        { status: 500 }
-      );
-    }
+    const db = createClient();
+    await db.createDocument(DB_ID, COL.SUBSCRIBERS, ID.unique(), {
+      name: parsed.data.name?.trim() ?? '',
+      email: parsed.data.email.trim().toLowerCase(),
+    });
 
     return NextResponse.json({ ok: true });
-  } catch {
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : String(e);
+    console.error('[subscribe]', msg);
     return NextResponse.json(
-      { ok: false, error: "Unexpected error" },
+      { ok: false, error: msg },
       { status: 500 }
     );
   }

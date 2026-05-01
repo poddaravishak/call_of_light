@@ -38,7 +38,7 @@ export function HeroSection({ title, tagline, description, bgImage }: Props) {
               {tagline}
             </motion.p>
 
-            <h1 className="font-display text-heading leading-[1.0] text-[56px] md:text-[80px] lg:text-[96px] font-light tracking-tight">
+            <h1 className="font-display text-heading leading-[1.0] text-[36px] sm:text-[52px] md:text-[72px] lg:text-[92px] font-light tracking-tight">
               {words.map((word, i) => (
                 <motion.span
                   key={i}
@@ -56,7 +56,7 @@ export function HeroSection({ title, tagline, description, bgImage }: Props) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.9 }}
-              className="mt-10 max-w-xl text-[18px] text-text/85 font-serif leading-relaxed"
+              className="mt-8 max-w-xl text-[16px] sm:text-[18px] text-text/85 font-serif leading-relaxed"
             >
               {description}
             </motion.p>
@@ -68,7 +68,7 @@ export function HeroSection({ title, tagline, description, bgImage }: Props) {
               className="mt-14"
             >
               <Link
-                href="/blog"
+                href="/stories"
                 className="group/btn font-mono-ui inline-flex items-center gap-3 border border-heading px-7 py-4 text-heading hover:bg-heading hover:text-white transition-all duration-500 hover:gap-5"
               >
                 Read the Stories

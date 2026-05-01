@@ -9,13 +9,13 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <section className="mx-auto max-w-3xl px-6 pt-40 pb-32">
+    <section className="mx-auto max-w-3xl px-4 sm:px-6 pt-32 sm:pt-40 pb-20 sm:pb-32">
       <SectionTitle
         kicker="Reach Out"
         title="Say something quiet."
         subtitle="We read every word."
       />
-      <div className="mt-20">
+      <div className="mt-12 sm:mt-20">
         <ContactForm />
       </div>
     </section>

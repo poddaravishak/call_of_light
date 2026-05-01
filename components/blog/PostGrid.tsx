@@ -5,6 +5,7 @@ type Props = {
   page?: number;
   limit?: number;
   tag?: string;
+  language?: string;
   authorId?: string;
 };
 

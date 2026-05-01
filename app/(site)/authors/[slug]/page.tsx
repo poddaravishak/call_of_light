@@ -35,8 +35,8 @@ export default async function AuthorProfilePage({
   return (
     <>
       <AuthorProfileHeader author={author} />
-      <section className="mx-auto max-w-content px-6 py-24">
-        <h2 className="font-display text-4xl mb-12">
+      <section className="mx-auto max-w-content px-4 sm:px-6 py-16 sm:py-24">
+        <h2 className="font-display text-3xl sm:text-4xl mb-10 sm:mb-12">
           Stories by {author.name}
         </h2>
         <PostGrid authorId={author.id} />

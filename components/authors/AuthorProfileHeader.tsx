@@ -17,7 +17,7 @@ export function AuthorProfileHeader({ author }: { author: Author }) {
             className="rounded-full mx-auto cover-img"
           />
         )}
-        <h1 className="mt-8 font-display text-heading text-5xl md:text-6xl">
+        <h1 className="mt-8 font-display text-heading text-4xl sm:text-5xl md:text-6xl">
           {author.name}
         </h1>
         {author.tagline && (

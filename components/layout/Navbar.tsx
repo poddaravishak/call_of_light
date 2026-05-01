@@ -6,7 +6,7 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const LINKS = [
-  { href: "/blog", label: "Blog" },
+  { href: "/stories", label: "Stories" },
   { href: "/authors", label: "Authors" },
   { href: "/contact", label: "Contact" },
 ];
@@ -25,10 +25,10 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-40 transition-all duration-500",
+        "fixed top-0 left-0 right-0 z-40 backdrop-blur-md transition-all duration-500",
         scrolled
-          ? "bg-white/80 backdrop-blur-md border-b border-border shadow-[0_1px_40px_-20px_rgba(10,10,10,0.25)]"
-          : "bg-transparent"
+          ? "bg-white/80 border-b border-border shadow-[0_1px_40px_-20px_rgba(10,10,10,0.25)]"
+          : "bg-white/20"
       )}
     >
       <nav className="mx-auto max-w-content flex items-center justify-between px-6 h-20">
@@ -68,13 +68,13 @@ export function Navbar() {
       </nav>
 
       {open && (
-        <div className="md:hidden fixed inset-0 top-20 z-40 bg-white flex flex-col items-center justify-center gap-10 border-t border-border">
+        <div className="md:hidden fixed inset-0 top-20 z-40 bg-white/95 backdrop-blur-md flex flex-col items-center justify-center gap-8 border-t border-border animate-[fadeIn_0.2s_ease]">
           {LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="font-display text-4xl"
+              className="font-display text-heading text-4xl hover:opacity-60 transition-opacity duration-300"
             >
               {link.label}
             </Link>
@@ -82,7 +82,7 @@ export function Navbar() {
           <Link
             href="/subscribe"
             onClick={() => setOpen(false)}
-            className="font-mono-ui border border-heading px-6 py-3 mt-6"
+            className="font-mono-ui border border-heading text-heading px-8 py-3 mt-4 hover:bg-heading hover:text-white transition-colors duration-400"
           >
             Subscribe →
           </Link>

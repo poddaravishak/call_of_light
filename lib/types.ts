@@ -19,6 +19,8 @@ export type Post = {
   body: unknown;
   body_html: string | null;
   tags: string[];
+  featured?: boolean;
+  language?: string | null;
   status: "draft" | "published";
   published_at: string | null;
   read_time: number | null;

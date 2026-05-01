@@ -126,6 +126,8 @@ export const demoPosts: Post[] = [
     body: null,
     body_html: BODY_LAST_LAMP,
     tags: ["Fiction", "Memory"],
+    featured: true,
+    language: "English",
     status: "published",
     published_at: "2026-03-14T08:00:00Z",
     read_time: 6,
@@ -145,6 +147,8 @@ export const demoPosts: Post[] = [
     body: null,
     body_html: BODY_LETTER_FROM_THAW,
     tags: ["Essay", "Nature"],
+    featured: true,
+    language: "English",
     status: "published",
     published_at: "2026-02-27T09:30:00Z",
     read_time: 4,
@@ -164,6 +168,8 @@ export const demoPosts: Post[] = [
     body: null,
     body_html: BODY_ON_SILENCE,
     tags: ["Essay", "Craft"],
+    featured: true,
+    language: "Bengali",
     status: "published",
     published_at: "2026-02-11T07:45:00Z",
     read_time: 7,
@@ -184,6 +190,7 @@ export const demoPosts: Post[] = [
     body_html:
       "<p>He drew the coastline as it was, not as it had been promised, and for this the village never quite forgave him.</p><p>Years later, when the sea had taken three of the houses he had mapped, they returned to his doorstep with a bottle of something dark and a small, embarrassed apology that did not name itself as one.</p><p>He accepted both, and said nothing, and poured.</p>",
     tags: ["Fiction"],
+    language: "English",
     status: "published",
     published_at: "2026-01-30T10:15:00Z",
     read_time: 5,
@@ -204,6 +211,7 @@ export const demoPosts: Post[] = [
     body_html:
       "<p><em>I.</em><br/>The kettle knows.<br/>The kettle has always known.<br/>It is kind enough not to say.</p><p><em>II.</em><br/>Stone is patient weather.<br/>Weather is impatient stone.<br/>Between them, a life.</p><p><em>III.</em><br/>I woke at four.<br/>The house was listening<br/>to something I could not hear.</p>",
     tags: ["Poetry"],
+    language: "English",
     status: "published",
     published_at: "2026-01-18T06:00:00Z",
     read_time: 3,
@@ -223,6 +231,7 @@ export const demoPosts: Post[] = [
     body_html:
       "<p>A photographic essay on abandoned shipyards along the Baltic, where the fog arrives each morning like a curator, takes its time with the exhibits, and leaves again before the first ferry.</p><p>I have photographed the same cranes for eleven years. They are no closer to falling. They are no closer to being used.</p><blockquote>The fog keeps them. The fog keeps everything, for a little while.</blockquote>",
     tags: ["Photography", "Essay"],
+    language: "French",
     status: "published",
     published_at: "2025-12-29T11:00:00Z",
     read_time: 8,
@@ -243,6 +252,7 @@ export const demoPosts: Post[] = [
     body_html:
       "<p>An accounting of the winters I have known — the kind that did not pass cleanly, and the kind that did.</p><p>There was the winter of the second illness, and the winter the pipes froze, and the winter I read nothing and wrote nothing and was, for a quiet three months, nearly happy.</p><p>They are not ranked. A life is not a ranking.</p>",
     tags: ["Essay", "Memory"],
+    language: "Bengali",
     status: "published",
     published_at: "2025-12-12T08:00:00Z",
     read_time: 5,
@@ -263,6 +273,7 @@ export const demoPosts: Post[] = [
     body_html:
       "<p>She kept the room exactly as it had been, which is not the same thing as keeping it the same. The light moved. The dust settled differently on the piano than it had settled on the piano a year ago. The room was a year older. It was not the same room.</p><p>But she kept it, and in keeping it, kept something else.</p>",
     tags: ["Fiction"],
+    language: "English",
     status: "published",
     published_at: "2025-11-24T09:00:00Z",
     read_time: 4,

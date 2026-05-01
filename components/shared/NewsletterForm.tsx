@@ -39,6 +39,9 @@ export function NewsletterForm() {
     }
   };
 
+  const inputClass =
+    "w-full bg-white/60 border border-border focus:border-heading focus:bg-white/90 outline-none px-4 py-3 text-base text-text placeholder:text-muted/50 transition-all duration-300";
+
   return (
     <AnimatePresence mode="wait">
       {submitted ? (
@@ -56,37 +59,47 @@ export function NewsletterForm() {
           onSubmit={handleSubmit(onSubmit)}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="flex flex-col md:flex-row gap-4 md:items-end"
+          className="flex flex-col gap-4"
         >
-          <div className="flex-1">
-            <label className="font-mono-ui text-muted block mb-2">Name</label>
-            <input
-              {...register("name")}
-              placeholder="Your name"
-              className="w-full bg-transparent border-b border-border focus:border-heading outline-none py-3 text-text placeholder:text-muted/60 transition-colors duration-400"
-            />
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex-1 text-left">
+              <label className="font-mono-ui text-muted block mb-2">
+                Name
+              </label>
+              <input
+                {...register("name")}
+                placeholder="Your name"
+                autoComplete="name"
+                className={inputClass}
+              />
+            </div>
+            <div className="flex-1 text-left">
+              <label className="font-mono-ui text-muted block mb-2">
+                Email *
+              </label>
+              <input
+                {...register("email")}
+                placeholder="you@domain.com"
+                type="email"
+                autoComplete="email"
+                className={inputClass}
+              />
+            </div>
           </div>
-          <div className="flex-1">
-            <label className="font-mono-ui text-muted block mb-2">Email</label>
-            <input
-              {...register("email")}
-              placeholder="you@domain.com"
-              type="email"
-              className="w-full bg-transparent border-b border-border focus:border-heading outline-none py-3 text-text placeholder:text-muted/60 transition-colors duration-400"
-            />
-          </div>
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="font-mono-ui border border-accent text-accent px-6 py-3 hover:bg-accent hover:text-bg transition-colors duration-400 inline-flex items-center gap-2 disabled:opacity-50"
-          >
-            {isSubmitting ? "Sending…" : "Subscribe"} <ArrowRight size={14} />
-          </button>
+
           {(errors.email || error) && (
-            <p className="font-mono-ui text-red-400 md:absolute md:-bottom-6 text-xs">
+            <p className="font-mono-ui text-red-400 text-[11px] text-left">
               {errors.email?.message ?? error}
             </p>
           )}
+
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full font-mono-ui border border-accent text-accent px-6 py-3 hover:bg-accent hover:text-bg transition-colors duration-400 inline-flex items-center justify-center gap-2 disabled:opacity-50"
+          >
+            {isSubmitting ? "Sending…" : "Subscribe"} <ArrowRight size={14} />
+          </button>
         </motion.form>
       )}
     </AnimatePresence>

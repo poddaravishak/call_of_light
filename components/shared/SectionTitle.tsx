@@ -15,7 +15,7 @@ export function SectionTitle({
           {kicker}
         </p>
       )}
-      <h1 className="font-display text-heading text-5xl md:text-6xl leading-[1.02] tracking-tight">
+      <h1 className="font-display text-heading text-4xl sm:text-5xl md:text-6xl leading-[1.02] tracking-tight">
         {title}
       </h1>
       {subtitle && (

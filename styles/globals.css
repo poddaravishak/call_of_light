@@ -66,6 +66,17 @@ body::after {
   pointer-events: none;
 }
 
+/* Mobile menu fade-in */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Prevent iOS input zoom — all form elements use at least 16px */
+input, select, textarea {
+  font-size: 16px;
+}
+
 ::selection {
   background: var(--ink);
   color: var(--bg);
@@ -210,4 +221,16 @@ a {
   border: none;
   border-top: 1px solid var(--border);
   margin: 3em 0;
+}
+
+/* drop cap on first paragraph */
+.prose-light > p:first-of-type::first-letter {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: 5em;
+  line-height: 0.82;
+  float: left;
+  margin-right: 0.1em;
+  margin-top: 0.06em;
+  color: var(--heading);
+  font-weight: 400;
 }

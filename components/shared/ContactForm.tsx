@@ -26,10 +26,12 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <div className="mb-10">
+    <div className="mb-6">
       <label className="font-mono-ui text-muted block mb-2">{label}</label>
       {children}
-      {error && <p className="font-mono-ui text-red-400 mt-2">{error}</p>}
+      {error && (
+        <p className="font-mono-ui text-red-400 mt-2 text-[11px]">{error}</p>
+      )}
     </div>
   );
 }
@@ -60,7 +62,7 @@ export function ContactForm() {
   };
 
   const inputClass =
-    "w-full bg-transparent border-b border-border focus:border-heading outline-none py-3 text-text placeholder:text-muted/60 transition-colors duration-400";
+    "w-full bg-white/60 border border-border focus:border-heading focus:bg-white/90 outline-none px-4 py-3 text-base text-text placeholder:text-muted/50 transition-all duration-300";
 
   return (
     <AnimatePresence mode="wait">
@@ -69,7 +71,7 @@ export function ContactForm() {
           key="success"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="border border-border p-16 text-center"
+          className="border border-border p-10 sm:p-16 text-center"
         >
           <Check className="mx-auto text-accent mb-6" size={28} />
           <h3 className="font-display text-3xl text-heading mb-4">
@@ -84,21 +86,26 @@ export function ContactForm() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
-          <Field label="Name *" error={errors.name?.message}>
-            <input
-              {...register("name")}
-              className={inputClass}
-              placeholder="Your name"
-            />
-          </Field>
-          <Field label="Email *" error={errors.email?.message}>
-            <input
-              {...register("email")}
-              type="email"
-              className={inputClass}
-              placeholder="you@domain.com"
-            />
-          </Field>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6">
+            <Field label="Name *" error={errors.name?.message}>
+              <input
+                {...register("name")}
+                className={inputClass}
+                placeholder="Your name"
+                autoComplete="name"
+              />
+            </Field>
+            <Field label="Email *" error={errors.email?.message}>
+              <input
+                {...register("email")}
+                type="email"
+                className={inputClass}
+                placeholder="you@domain.com"
+                autoComplete="email"
+              />
+            </Field>
+          </div>
+
           <Field label="Subject *" error={errors.subject?.message}>
             <input
               {...register("subject")}
@@ -106,6 +113,7 @@ export function ContactForm() {
               placeholder="A single clear line"
             />
           </Field>
+
           <Field label="Message *" error={errors.message?.message}>
             <textarea
               {...register("message")}
@@ -115,14 +123,16 @@ export function ContactForm() {
             />
           </Field>
 
-          <div className="flex items-center justify-end gap-6">
-            {error && <p className="font-mono-ui text-red-400">{error}</p>}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-end gap-4 mt-6">
+            {error && (
+              <p className="font-mono-ui text-red-400 text-[11px]">{error}</p>
+            )}
             <button
               type="submit"
               disabled={isSubmitting}
-              className="font-mono-ui border border-heading text-heading px-6 py-3 hover:bg-heading hover:text-white transition-colors duration-400 inline-flex items-center gap-2 disabled:opacity-50"
+              className="w-full sm:w-auto font-mono-ui border border-heading text-heading px-6 py-3 hover:bg-heading hover:text-white transition-colors duration-400 inline-flex items-center justify-center gap-2 disabled:opacity-50"
             >
-              {isSubmitting ? "Sending…" : "Send Message"}{" "}
+              {isSubmitting ? "Sending…" : "Send Message"}
               <ArrowRight size={14} />
             </button>
           </div>
