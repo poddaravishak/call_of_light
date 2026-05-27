@@ -1,16 +1,16 @@
-import { Cormorant_Garamond, Lora, Space_Mono } from "next/font/google";
+import { Playfair_Display, Inter, Space_Mono } from "next/font/google";
 
-export const cormorant = Cormorant_Garamond({
+export const playfair = Playfair_Display({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-cormorant",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-playfair",
   display: "swap",
 });
 
-export const lora = Lora({
+export const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
-  variable: "--font-lora",
+  variable: "--font-inter",
   display: "swap",
 });
 
@@ -20,3 +20,4 @@ export const spaceMono = Space_Mono({
   variable: "--font-geist-mono",
   display: "swap",
 });
+

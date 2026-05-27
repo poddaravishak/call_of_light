@@ -16,22 +16,34 @@ export function Footer() {
 
         <div className="flex flex-wrap gap-8">
           <Link
-            href="/stories"
+            href="/photopoetry"
             className="font-mono-ui text-text hover:text-heading transition-colors duration-400"
           >
-            Stories
+            Photopoetry
           </Link>
           <Link
-            href="/authors"
+            href="/philosophy"
             className="font-mono-ui text-text hover:text-heading transition-colors duration-400"
           >
-            Authors
+            Philosophy
           </Link>
           <Link
-            href="/contact"
+            href="/reflections"
             className="font-mono-ui text-text hover:text-heading transition-colors duration-400"
           >
-            Contact
+            Reflections
+          </Link>
+          <Link
+            href="/archive"
+            className="font-mono-ui text-text hover:text-heading transition-colors duration-400"
+          >
+            Archive
+          </Link>
+          <Link
+            href="/about"
+            className="font-mono-ui text-text hover:text-heading transition-colors duration-400"
+          >
+            About
           </Link>
           <Link
             href="/subscribe"

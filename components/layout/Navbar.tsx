@@ -6,9 +6,14 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const LINKS = [
-  { href: "/stories", label: "Stories" },
-  { href: "/authors", label: "Authors" },
-  { href: "/contact", label: "Contact" },
+  { href: "/", label: "Home" },
+  { href: "/photopoetry", label: "Photopoetry" },
+  { href: "/philosophy", label: "Philosophy" },
+  { href: "/reflections", label: "Reflections" },
+  { href: "/archive", label: "Archive" },
+  { href: "/about", label: "About" },
+  { href: "/subscribe", label: "Subscribe" },
+  { href: "/login", label: "Login" },
 ];
 
 export function Navbar() {
@@ -16,7 +21,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 80);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -25,67 +30,58 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-40 backdrop-blur-md transition-all duration-500",
+        "fixed top-0 left-0 right-0 z-40 transition-all duration-500",
         scrolled
-          ? "bg-white/80 border-b border-border shadow-[0_1px_40px_-20px_rgba(10,10,10,0.25)]"
-          : "bg-white/20"
+          ? "bg-[#F8F5F0]/90 backdrop-blur-md border-b border-[#E5E0D8] py-4 shadow-[0_1px_20px_-10px_rgba(28,28,28,0.15)]"
+          : "bg-transparent py-6"
       )}
     >
-      <nav className="mx-auto max-w-content flex items-center justify-between px-6 h-20">
+      <nav className="mx-auto max-w-6xl flex items-center justify-between px-6">
         <Link
           href="/"
-          className="font-display uppercase tracking-[0.18em] text-[18px] text-heading"
+          className="font-display uppercase tracking-[0.25em] text-[18px] text-[#1C1C1C] hover:text-[#D4A017] transition-colors duration-400 font-semibold"
         >
           The Call of Light
         </Link>
 
-        <div className="hidden md:flex items-center gap-10">
+        {/* Desktop links */}
+        <div className="hidden lg:flex items-center gap-8">
           {LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="font-mono-ui text-text hover:text-heading transition-colors duration-400"
+              className="font-mono-ui text-[11px] text-[#4A4A4A] hover:text-[#D4A017] tracking-[0.14em] uppercase transition-colors duration-400 relative group py-1"
             >
               {link.label}
+              <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#D4A017] transition-all duration-400 group-hover:w-full" />
             </Link>
           ))}
-          <Link
-            href="/subscribe"
-            className="font-mono-ui border border-heading px-4 py-2 text-heading hover:bg-heading hover:text-white transition-colors duration-400"
-          >
-            Subscribe →
-          </Link>
         </div>
 
+        {/* Mobile menu button */}
         <button
           type="button"
           aria-label="Toggle menu"
-          className="md:hidden text-heading"
+          className="lg:hidden text-[#1C1C1C] hover:text-[#D4A017] transition-colors"
           onClick={() => setOpen((v) => !v)}
         >
-          {open ? <X size={22} /> : <Menu size={22} />}
+          {open ? <X size={24} /> : <Menu size={24} />}
         </button>
       </nav>
 
+      {/* Mobile drawer */}
       {open && (
-        <div className="md:hidden fixed inset-0 top-20 z-40 bg-white/95 backdrop-blur-md flex flex-col items-center justify-center gap-8 border-t border-border animate-[fadeIn_0.2s_ease]">
+        <div className="lg:hidden fixed inset-0 top-[73px] z-40 bg-[#F8F5F0] flex flex-col items-center justify-center gap-6 border-t border-[#E5E0D8] animate-[fadeIn_0.3s_ease]">
           {LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="font-display text-heading text-4xl hover:opacity-60 transition-opacity duration-300"
+              className="font-display text-[#1C1C1C] text-3xl hover:text-[#D4A017] transition-colors duration-300 italic"
             >
               {link.label}
             </Link>
           ))}
-          <Link
-            href="/subscribe"
-            onClick={() => setOpen(false)}
-            className="font-mono-ui border border-heading text-heading px-8 py-3 mt-4 hover:bg-heading hover:text-white transition-colors duration-400"
-          >
-            Subscribe →
-          </Link>
         </div>
       )}
     </header>

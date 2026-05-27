@@ -15,9 +15,6 @@ export default async function HomePage() {
   return (
     <>
       <HeroSection
-        title={config.hero_title}
-        tagline={config.hero_tagline}
-        description={config.hero_description}
         bgImage={config.hero_bg_image ?? FALLBACK_BG}
       />
       <FeaturedPost />

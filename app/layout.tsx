@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { cormorant, lora, spaceMono } from "@/lib/fonts";
+import { playfair, inter, spaceMono } from "@/lib/fonts";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${lora.variable} ${spaceMono.variable}`}
+      className={`${playfair.variable} ${inter.variable} ${spaceMono.variable}`}
     >
       <body className="bg-bg text-text antialiased">{children}</body>
     </html>

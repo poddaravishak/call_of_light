@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient, DB_ID, COL, ID } from "@/lib/appwrite";
 
+export const dynamic = 'force-dynamic';
+
 const schema = z.object({
   name: z.string().min(1).max(120),
   email: z.string().email(),
